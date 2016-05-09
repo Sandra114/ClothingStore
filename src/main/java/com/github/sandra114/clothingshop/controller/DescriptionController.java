@@ -33,6 +33,8 @@ public class DescriptionController extends HttpServlet {
     private static final String GENDER = "gender";
     private static final String CATEGORY = "category";
     private static final String CATEGORIES = "categories";
+    private static final String ID = "id";
+    private static final String ITEM = "item";
 //    private static final String ITEM = "/item.jsp";
 
     private final ItemDescriptionDao dao = new ItemDescriptionDaoImpl();
@@ -46,20 +48,23 @@ public class DescriptionController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter(ACTION);
+        req.setAttribute(CATEGORIES, categoryDao.getAll());
         if (action != null) {
             switch (action) {
                 case SHOW_ACTION:
-
+                    String itemId = req.getParameter(ID);
+                    ItemDescription item = dao.getById(Integer.valueOf(itemId));
+                    req.setAttribute(ITEM, item);
             }
+        } else {
+            String gender = req.getParameter(GENDER);
+            String categoryId = req.getParameter(CATEGORY);
+            List<ItemDescription> allItems = dao.getAll().stream()
+                    .filter(genderFunc.apply(gender))
+                    .filter(categoryFunc.apply(categoryId))
+                    .collect(Collectors.toList());
+            req.setAttribute(ITEM_DESCRIPTIONS, allItems);
         }
-        String gender = req.getParameter(GENDER);
-        String categoryId = req.getParameter(CATEGORY);
-        List<ItemDescription> allItems = dao.getAll().stream()
-                .filter(genderFunc.apply(gender))
-                .filter(categoryFunc.apply(categoryId))
-                .collect(Collectors.toList());
-        req.setAttribute(ITEM_DESCRIPTIONS, allItems);
-        req.setAttribute(CATEGORIES, categoryDao.getAll());
         RequestDispatcher view = req.getRequestDispatcher(ITEMS);
         view.forward(req, resp);
     }

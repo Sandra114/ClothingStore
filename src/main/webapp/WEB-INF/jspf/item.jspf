@@ -1,0 +1,58 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a href="items">Все товары</a></li>
+                    <li>
+                        <a href="items?category=<c:out value="${item.category.id}"/>">
+                            <c:out value="${item.category.title}"/>
+                        </a>
+                    </li>
+                    <li class=" active">
+                        <a href="items?action=show&id=<c:out value="${item.id}"/>">
+                            <c:out value="${item.title}"/>
+                        </a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <a href="items?action=show&id=<c:out value="${item.id}"/>">
+                    <img alt="placeholder"
+                         src="<c:out value="photos/${item.photo}"/>"
+                         data-holder-rendered="true"
+                         style="height: 300px; width: 200px; display: block;">
+                </a>
+            </div>
+
+            <div class="col-md-7">
+                <a href="items?action=show&id=<c:out value="${item.id}"/>">
+                    <h4><c:out value="${item.title}"/></h4>
+                </a>
+                Пол:
+                <a href="items?gender=<c:out value="${item.gender}"/>">
+                    <c:out value="${item.gender}"/>
+                </a>
+                <div>
+                    <a class="btn btn-primary"
+                       href="items?action=show&id=<c:out value="${item.id}"/>">
+                                    <span class="glyphicon glyphicon-shopping-cart"
+                                          aria-hidden="true"></span>
+                        <c:out value="Добавить в корзину"/>
+                    </a>
+
+                    <a class="btn btn-danger"
+                       href="items?action=show&id=<c:out value="${item.id}"/>">
+                                    <span class="glyphicon glyphicon-shopping-cart"
+                                          aria-hidden="true"></span>
+                        <c:out value="Купить в один клик за ${item.price} Руб"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
