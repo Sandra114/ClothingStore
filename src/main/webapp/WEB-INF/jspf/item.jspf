@@ -30,27 +30,55 @@
             </div>
 
             <div class="col-md-7">
-                <a href="items?action=show&id=<c:out value="${item.id}"/>">
-                    <h4><c:out value="${item.title}"/></h4>
-                </a>
-                Пол:
-                <a href="items?gender=<c:out value="${item.gender}"/>">
-                    <c:out value="${item.gender}"/>
-                </a>
-                <div>
-                    <a class="btn btn-primary"
-                       href="items?action=show&id=<c:out value="${item.id}"/>">
+                <div class="row">
+                    <a href="items?action=show&id=<c:out value="${item.id}"/>">
+                        <h4><c:out value="${item.title}"/></h4>
+                    </a>
+                    Пол:
+                    <a href="items?gender=<c:out value="${item.gender}"/>">
+                        <c:out value="${item.gender}"/>
+                    </a>
+                </div>
+                <div class="row">
+                    <form class="form-horizontal">
+                        <fieldset>
+                            <legend></legend>
+                            <!-- Multiple Radios -->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Размеры</label>
+                                <div class="col-md-9">
+                                    <c:forEach items="${item.sizes}" var="itemSize">
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="itemSize"
+                                                       value="<c:out value="${itemSize.id}"/>"
+                                                       checked="checked"><c:out value="${itemSize.size}"/>
+                                                <em class="text-success"> (осталось <c:out
+                                                        value="${itemSize.stock.rest}"/> шт.)</em>
+                                            </label>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary"
+                            href="items?action=show&id=<c:out value="${item.id}"/>">
                                     <span class="glyphicon glyphicon-shopping-cart"
                                           aria-hidden="true"></span>
                         <c:out value="Добавить в корзину"/>
-                    </a>
-
-                    <a class="btn btn-danger"
-                       href="items?action=show&id=<c:out value="${item.id}"/>">
+                    </button>
+                </div>
+                <br>
+                <div class="row">
+                    <button class="btn btn-danger"
+                            href="items?action=show&id=<c:out value="${item.id}"/>">
                                     <span class="glyphicon glyphicon-shopping-cart"
                                           aria-hidden="true"></span>
                         <c:out value="Купить в один клик за ${item.price} Руб"/>
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>

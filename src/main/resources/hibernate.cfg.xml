@@ -21,5 +21,7 @@
 
         <mapping class="com.github.sandra114.clothingshop.model.Category"/>
         <mapping class="com.github.sandra114.clothingshop.model.ItemDescription"/>
+        <mapping class="com.github.sandra114.clothingshop.model.Size"/>
+        <mapping class="com.github.sandra114.clothingshop.model.Stock"/>
     </session-factory>
 </hibernate-configuration>

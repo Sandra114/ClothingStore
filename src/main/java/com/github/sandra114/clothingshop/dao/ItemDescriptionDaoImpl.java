@@ -1,6 +1,7 @@
 package com.github.sandra114.clothingshop.dao;
 
 import com.github.sandra114.clothingshop.model.ItemDescription;
+import com.github.sandra114.clothingshop.model.Size;
 import com.github.sandra114.clothingshop.util.HibernateUtil;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -56,6 +57,10 @@ public class ItemDescriptionDaoImpl implements ItemDescriptionDao {
         q.setParameter(ID, id);
         List<ItemDescription> list = (List<ItemDescription>) q.list();
         ItemDescription itemDescription = list.get(0);
+        Hibernate.initialize(itemDescription.getSizes());
+        for (Size size : itemDescription.getSizes()) {
+            Hibernate.initialize(size.getStock());
+        }
         Hibernate.initialize(itemDescription.getCategory());
         session.getTransaction().commit();
         return itemDescription;
