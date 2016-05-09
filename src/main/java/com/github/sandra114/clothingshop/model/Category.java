@@ -1,7 +1,8 @@
 package com.github.sandra114.clothingshop.model;
 
-
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Sandra
@@ -13,7 +14,11 @@ public class Category {
     @Id
     @GeneratedValue
     private int id;
+
     private String title;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category", cascade = CascadeType.ALL)
+    private Set<ItemDescription> itemDescription = new HashSet<>();
 
     public Category() {
     }
@@ -42,6 +47,15 @@ public class Category {
         return id == category.id && title.equals(category.title);
 
     }
+
+    public Set<ItemDescription> getItemDescription() {
+        return itemDescription;
+    }
+
+    public void setItemDescription(Set<ItemDescription> itemDescription) {
+        this.itemDescription = itemDescription;
+    }
+
 
     @Override
     public int hashCode() {

@@ -20,5 +20,6 @@
         <property name="current_session_context_class">thread</property>
 
         <mapping class="com.github.sandra114.clothingshop.model.Category"/>
+        <mapping class="com.github.sandra114.clothingshop.model.ItemDescription"/>
     </session-factory>
 </hibernate-configuration>

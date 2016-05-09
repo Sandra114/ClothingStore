@@ -12,14 +12,16 @@
 <div class="container">
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
-            <c:forEach items="${categories}" var="cat">
-                <div>
-                    <a href="<c:url value="category/${cat.id}"/>"><c:out value="${cat.title}"></c:out></a>
-                </div>
-            </c:forEach>
+            <ul class="nav nav-pills nav-stacked">
+                <c:forEach items="${categories}" var="cat">
+                    <li role="presentation">
+                        <a href="<c:url value="items?category=${cat.id}"/>"><c:out value="${cat.title}"></c:out></a>
+                    </li>
+                </c:forEach>
+            </ul>
         </div>
     </div>
 </div>
-<%@include file="WEB-INF/jspf/css.jspf" %>
+<%@include file="WEB-INF/jspf/scripts.jspf" %>
 </body>
 </html>

@@ -1,12 +1,24 @@
 package com.github.sandra114.clothingshop.model;
 
+import javax.persistence.*;
+
 /**
  * @author Sandra
  */
+@Entity
+@Table(name = "itemdescription")
 public class ItemDescription {
+    @Id
+    @GeneratedValue
     private int id;
+
+    @Column(name = "titile")
     private String title;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
     private Category category;
+
     private String photo;
     private String gender;
     private double price;

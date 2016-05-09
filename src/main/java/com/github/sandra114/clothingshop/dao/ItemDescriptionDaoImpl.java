@@ -1,6 +1,6 @@
 package com.github.sandra114.clothingshop.dao;
 
-import com.github.sandra114.clothingshop.model.Category;
+import com.github.sandra114.clothingshop.model.ItemDescription;
 import com.github.sandra114.clothingshop.util.HibernateUtil;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -11,52 +11,48 @@ import java.util.List;
 /**
  * @author Sandra
  */
-public class CategoryDaoImpl implements CategoryDao {
-    private static final String FROM_CATEGORY = "from Category";
-    private static final String FROM_CATEGORY_C_WHERE_ID = "from Category c where c.id=:id";
-    private static final String ID = "id";
+public class ItemDescriptionDaoImpl implements ItemDescriptionDao {
+    private static final String FROM_ITEM_DEISCRIPTIONS = "from ItemDescription";
 
-    public void add(Category category) {
+    public void add(ItemDescription itemDescription) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        session.save(category);
+        session.save(itemDescription);
         session.getTransaction().commit();
     }
 
-    public void delete(Category category) {
+    public void delete(ItemDescription itemDescription) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.delete(category);
+        session.delete(itemDescription);
         session.flush();
         session.getTransaction().commit();
     }
 
-    public void update(Category category) {
+    public void update(ItemDescription itemDescription) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        session.update(category);
+        session.update(itemDescription);
         session.getTransaction().commit();
     }
 
-    public List<Category> getAll() {
+    public List<ItemDescription> getAll() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Query q = session.createQuery(FROM_CATEGORY);
-        List<Category> list = (List<Category>) q.list();
-        for (Category category : list) {
-            Hibernate.initialize(category.getItemDescription());
+        Query q = session.createQuery(FROM_ITEM_DEISCRIPTIONS);
+        List<ItemDescription> list = (List<ItemDescription>) q.list();
+        for (ItemDescription itemDescription : list) {
+            Hibernate.initialize(itemDescription.getCategory());
         }
         session.getTransaction().commit();
         return list;
     }
 
-    public Category getById(int id) {
+    public ItemDescription getById(int id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Query q = session.createQuery(FROM_CATEGORY_C_WHERE_ID);
-        q.setParameter(ID, id);
-        List<Category> list = (List<Category>) q.list();
+        Query q = session.createQuery(FROM_ITEM_DEISCRIPTIONS);
+        List<ItemDescription> list = (List<ItemDescription>) q.list();
         session.getTransaction().commit();
-        HibernateUtil.shutdown();
         return list.get(0);
     }
 }
