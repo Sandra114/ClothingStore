@@ -5,13 +5,9 @@
 <!-- Optional theme -->
 <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
 <style>
-<!-- for fixed navbar-->
-  body {
-    padding-top: 160px;
-  }
-  @media (max-width: 980px) {
-    body {
-      padding-top: 0;
+    @media (max-width: 980px) {
+        body {
+            padding-top: 0;
+        }
     }
-  }
 </style>

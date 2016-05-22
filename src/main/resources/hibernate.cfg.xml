@@ -16,12 +16,15 @@
         <property name="hbm2ddl.auto">update</property>
 
         <!-- JDBC connection pool (use the built-in) -->
-        <property name="connection.pool_size">1</property>
+        <property name="connection.pool_size">3</property>
         <property name="current_session_context_class">thread</property>
 
         <mapping class="com.github.sandra114.clothingshop.model.Category"/>
         <mapping class="com.github.sandra114.clothingshop.model.ItemDescription"/>
         <mapping class="com.github.sandra114.clothingshop.model.Size"/>
         <mapping class="com.github.sandra114.clothingshop.model.Stock"/>
+        <mapping class="com.github.sandra114.clothingshop.model.Client"/>
+        <mapping class="com.github.sandra114.clothingshop.model.OrderItem"/>
+        <mapping class="com.github.sandra114.clothingshop.model.Order"/>
     </session-factory>
 </hibernate-configuration>

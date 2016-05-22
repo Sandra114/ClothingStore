@@ -1,6 +1,8 @@
 package com.github.sandra114.clothingshop.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Sandra
@@ -18,8 +20,11 @@ public class Size {
     @JoinColumn(name = "item_desc_id")
     private ItemDescription items;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "size", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "size", cascade = CascadeType.ALL, orphanRemoval = true)
     private Stock stock;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "size", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<OrderItem> orderItem = new HashSet<>();
 
     public Size() {
     }
@@ -38,14 +43,6 @@ public class Size {
 
     public void setSize(int size) {
         this.size = size;
-    }
-
-    public ItemDescription getItemDescription() {
-        return items;
-    }
-
-    public void setItemDescription(ItemDescription items) {
-        this.items = items;
     }
 
     public ItemDescription getItems() {

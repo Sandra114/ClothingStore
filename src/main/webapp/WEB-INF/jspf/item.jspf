@@ -1,4 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%--@elvariable id="item" type="com.github.sandra114.clothingshop.model.ItemDescription"--%>
+
+<c:set var="disableBuyButton" scope="session" value="disabled=&quot;disabled&quot;"/>
 
 <div class="panel panel-default">
     <div class="panel-body">
@@ -40,7 +43,7 @@
                     </a>
                 </div>
                 <div class="row">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" action="buy" method="post">
                         <fieldset>
                             <legend></legend>
                             <!-- Multiple Radios -->
@@ -50,9 +53,19 @@
                                     <c:forEach items="${item.sizes}" var="itemSize">
                                         <div class="radio">
                                             <label>
-                                                <input type="radio" name="itemSize"
+                                                <input type="radio" name="itemSize" required
                                                        value="<c:out value="${itemSize.id}"/>"
-                                                       checked="checked"><c:out value="${itemSize.size}"/>
+
+                                                <c:choose>
+                                                <c:when test="${itemSize.stock.rest == 0}">
+                                                    <c:out value="disabled"/>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:set var="disableBuyButton" scope="session" value=" "/>
+                                                </c:otherwise>
+                                                </c:choose>
+                                                >
+                                                <c:out value="${itemSize.size}"/>
                                                 <em class="text-success"> (осталось <c:out
                                                         value="${itemSize.stock.rest}"/> шт.)</em>
                                             </label>
@@ -61,25 +74,35 @@
                                 </div>
                             </div>
                         </fieldset>
+
+                        <div class="row">
+                            <button type="submit"
+                                    class="btn btn-primary"
+                                    <c:out value="${disableBuyButton}"/>
+                                    name="action"
+                                    value="addToCart<c:out value="${item.id}"/>"
+                            >
+                                    <span class="glyphicon glyphicon-shopping-cart"
+                                          aria-hidden="true"></span>
+                                <c:out value="Добавить в корзину"/>
+                            </button>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <button type="submit"
+                                    class="btn btn-danger"
+                                    <c:out value="${disableBuyButton}"/>
+                                    name="buyType"
+                                    value="oneClick<c:out value="${item.id}"/>"
+                            >
+                                    <span class="glyphicon glyphicon-ok"
+                                          aria-hidden="true"></span>
+                                <c:out value="Купить в один клик за ${item.price} Руб"/>
+                            </button>
+                        </div>
                     </form>
                 </div>
-                <div class="row">
-                    <button class="btn btn-primary"
-                            href="items?action=show&id=<c:out value="${item.id}"/>">
-                                    <span class="glyphicon glyphicon-shopping-cart"
-                                          aria-hidden="true"></span>
-                        <c:out value="Добавить в корзину"/>
-                    </button>
-                </div>
-                <br>
-                <div class="row">
-                    <button class="btn btn-danger"
-                            href="items?action=show&id=<c:out value="${item.id}"/>">
-                                    <span class="glyphicon glyphicon-shopping-cart"
-                                          aria-hidden="true"></span>
-                        <c:out value="Купить в один клик за ${item.price} Руб"/>
-                    </button>
-                </div>
+
             </div>
         </div>
     </div>

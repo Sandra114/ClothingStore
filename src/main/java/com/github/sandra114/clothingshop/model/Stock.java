@@ -19,10 +19,10 @@ public class Stock {
     @Column(name = "item_id")
     private int id;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     private Size size;
-
+    
     private int rest;
 
     public Stock() {
