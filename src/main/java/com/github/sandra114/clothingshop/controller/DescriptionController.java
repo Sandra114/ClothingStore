@@ -24,9 +24,6 @@ import java.util.stream.Collectors;
  */
 @WebServlet("/items")
 public class DescriptionController extends HttpServlet {
-    //    private static final String EDIT_ACTION = "edit";
-//    private static final String DELETE_ACTION = "delete";
-//    private static final String ADD_ACTION = "add";
     private static final String SHOW_ACTION = "show";
     private static final String ACTION = "action";
     private static final String ITEMS = "/items.jsp";
@@ -107,8 +104,4 @@ public class DescriptionController extends HttpServlet {
         view.forward(req, resp);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
-    }
 }

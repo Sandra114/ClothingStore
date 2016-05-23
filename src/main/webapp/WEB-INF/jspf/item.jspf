@@ -76,7 +76,7 @@
                         </fieldset>
 
                         <div class="row">
-                            <button type="submit"
+                            <button type="submit" disabled="disabled"
                                     class="btn btn-primary"
                                     <c:out value="${disableBuyButton}"/>
                                     name="action"

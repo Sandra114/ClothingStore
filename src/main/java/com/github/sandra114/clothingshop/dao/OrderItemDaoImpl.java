@@ -7,7 +7,7 @@ import org.hibernate.Session;
 /**
  * @author Sandra
  */
-public class OrderItemImpl implements OrderItemDao {
+public class OrderItemDaoImpl implements OrderItemDao {
     @Override
     public void add(OrderItem orderItem) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
