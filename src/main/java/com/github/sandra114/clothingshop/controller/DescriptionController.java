@@ -35,6 +35,7 @@ public class DescriptionController extends HttpServlet {
     private static final String CATEGORIES = "categories";
     private static final String ID = "id";
     private static final String ITEM = "item";
+    private static final String SEARCH = "search";
 //    private static final String ITEM = "/item.jsp";
 
     private final ItemDescriptionDao dao = new ItemDescriptionDaoImpl();
@@ -45,8 +46,12 @@ public class DescriptionController extends HttpServlet {
     private Function<String, Predicate<ItemDescription>> categoryFunc =
             s -> s == null ? i -> true : i -> i.getCategory().getId() == Integer.valueOf(s);
 
+    private Function<String, Predicate<ItemDescription>> search =
+            s -> s == null ? i -> true : i -> i.getTitle().toLowerCase().trim().contains(s);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         String action = req.getParameter(ACTION);
         req.setAttribute(CATEGORIES, categoryDao.getAll());
         if (action != null) {
@@ -59,9 +64,11 @@ public class DescriptionController extends HttpServlet {
         } else {
             String gender = req.getParameter(GENDER);
             String categoryId = req.getParameter(CATEGORY);
+            String se = req.getParameter(SEARCH).toLowerCase().trim();
             List<ItemDescription> allItems = dao.getAll().stream()
                     .filter(genderFunc.apply(gender))
                     .filter(categoryFunc.apply(categoryId))
+                    .filter(search.apply(se))
                     .collect(Collectors.toList());
             req.setAttribute(ITEM_DESCRIPTIONS, allItems);
         }
