@@ -20,13 +20,17 @@
 <div class="row">
     <div class="col-md-12 btn-block">
         <a href="items?sort=lowHigh&gender=<%= request.getParameter("gender") %>&category=<%= request.getParameter("category") %>"
-           class="btn btn-default" type="submit">Сначала недорогиe</a>
+           class="btn <%= request.getParameter("sort") != null && request.getParameter("sort").equals("lowHigh") ? "btn-primary" : "btn-default"%> "
+           type="submit">Сначала недорогиe</a>
         <a href="items?sort=highLow&gender=<%= request.getParameter("gender") %>&category=<%= request.getParameter("category") %>"
-           class="btn btn-default" type="submit">Сначала дорогиe</a>
+           class="btn <%= request.getParameter("sort") != null && request.getParameter("sort").equals("highLow") ? "btn-primary" : "btn-default"%> "
+           type="submit">Сначала дорогиe</a>
         <a href="items?sort=az&gender=<%= request.getParameter("gender") %>&category=<%= request.getParameter("category") %>"
-           class="btn btn-default" type="submit">А-Я</a>
+           class="btn <%= request.getParameter("sort") != null && request.getParameter("sort").equals("az") ? "btn-primary" : "btn-default"%> "
+           type="submit">А-Я</a>
         <a href="items?sort=za&gender=<%= request.getParameter("gender") %>&category=<%= request.getParameter("category") %>"
-           class="btn btn-default" type="submit">Я-А</a>
+           class="btn <%= request.getParameter("sort") != null && request.getParameter("sort").equals("za") ? "btn-primary" : "btn-default"%> "
+           type="submit">Я-А</a>
     </div>
 </div>
 <br>

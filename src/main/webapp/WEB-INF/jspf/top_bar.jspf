@@ -15,7 +15,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="items">Товары</a></li>
                 <li><a href="category">Категории</a></li>
-                <li><a href="#">Заказы</a></li>
+                <%--<li><a href="#">Заказы</a></li>--%>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">Войти</a></li>
