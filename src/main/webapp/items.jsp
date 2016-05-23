@@ -16,7 +16,7 @@
                     <ul class="nav nav-pills nav-stacked">
                         <c:forEach items="${categories}" var="cat">
                             <li role="presentation" class="
-                    <c:if test="${param.category != null && param.category==cat.id}">
+                    <c:if test="${param.category != null && !param.category == 'null' && param.category==cat.id}">
                         <c:out value="active"/>
                     </c:if>">
                                 <a href="<c:url value="items?category=${cat.id}"/>"><c:out

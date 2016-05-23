@@ -2,10 +2,8 @@
 
 <div class="row">
     <div class="col-md-12">
-
         <form class="form" action="items" method="get">
             <fieldset>
-                <!-- Text input-->
                 <div class="form-group">
                     <div class="input-group">
                         <input name="search" type="text" class="form-control" placeholder="Введите слово для поиска">
@@ -14,20 +12,21 @@
       </span>
                     </div>
                 </div>
-
             </fieldset>
         </form>
-
-        <!-- /input-group -->
     </div>
 </div>
-<br>
+
 <div class="row">
     <div class="col-md-12 btn-block">
-        <button class="btn btn-default" type="submit">Сначала недорогиe</button>
-        <button class="btn btn-default" type="submit">Сначала дорогиe</button>
-        <button class="btn btn-default" type="submit">А-Я</button>
-        <button class="btn btn-default" type="submit">Я-А</button>
+        <a href="items?sort=lowHigh&gender=<%= request.getParameter("gender") %>&category=<%= request.getParameter("category") %>"
+           class="btn btn-default" type="submit">Сначала недорогиe</a>
+        <a href="items?sort=highLow&gender=<%= request.getParameter("gender") %>&category=<%= request.getParameter("category") %>"
+           class="btn btn-default" type="submit">Сначала дорогиe</a>
+        <a href="items?sort=az&gender=<%= request.getParameter("gender") %>&category=<%= request.getParameter("category") %>"
+           class="btn btn-default" type="submit">А-Я</a>
+        <a href="items?sort=za&gender=<%= request.getParameter("gender") %>&category=<%= request.getParameter("category") %>"
+           class="btn btn-default" type="submit">Я-А</a>
     </div>
 </div>
 <br>

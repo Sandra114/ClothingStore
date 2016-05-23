@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -36,18 +37,46 @@ public class DescriptionController extends HttpServlet {
     private static final String ID = "id";
     private static final String ITEM = "item";
     private static final String SEARCH = "search";
-//    private static final String ITEM = "/item.jsp";
+    private static final String SORT = "sort";
 
     private final ItemDescriptionDao dao = new ItemDescriptionDaoImpl();
     private final CategoryDao categoryDao = new CategoryDaoImpl();
 
     private Function<String, Predicate<ItemDescription>> genderFunc =
-            s -> s == null ? i -> true : i -> i.getGender().trim().startsWith(s);
+            s -> !ifExists(s) || s.equals("null") ? i -> true : i -> i.getGender().trim().startsWith(s);
     private Function<String, Predicate<ItemDescription>> categoryFunc =
-            s -> s == null ? i -> true : i -> i.getCategory().getId() == Integer.valueOf(s);
+            s -> !ifExists(s) ? i -> true : i -> i.getCategory().getId() == Integer.valueOf(s);
 
     private Function<String, Predicate<ItemDescription>> search =
-            s -> s == null ? i -> true : i -> i.getTitle().toLowerCase().trim().contains(s);
+            s -> !ifExists(s) ? i -> true : i ->
+                    i.getTitle().toLowerCase().trim().contains(s.toLowerCase().trim())
+                            || i.getCategory().getTitle().toLowerCase().trim().contains(s.toLowerCase().trim());
+
+    private static boolean ifExists(String s) {
+        return s != null && !s.equals("null");
+    }
+
+    private Comparator<ItemDescription> priceHighLow = (i1, i2) -> Double.compare(i2.getPrice(), i1.getPrice());
+    private Comparator<ItemDescription> priceLowHigh = (i1, i2) -> Double.compare(i1.getPrice(), i2.getPrice());
+
+    private Comparator<ItemDescription> azOrder = (o1, o2) -> o1.getTitle().compareTo(o2.getTitle());
+    private Comparator<ItemDescription> zaOrder = (o1, o2) -> o2.getTitle().compareTo(o1.getTitle());
+
+    private Function<String, Comparator<ItemDescription>> sort = s -> {
+        if (s == null) return (o1, o2) -> 0;
+        switch (s) {
+            case "highLow":
+                return priceHighLow;
+            case "lowHigh":
+                return priceLowHigh;
+            case "az":
+                return azOrder;
+            case "za":
+                return zaOrder;
+            default:
+                return (o1, o2) -> 0;
+        }
+    };
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -64,11 +93,13 @@ public class DescriptionController extends HttpServlet {
         } else {
             String gender = req.getParameter(GENDER);
             String categoryId = req.getParameter(CATEGORY);
-            String se = req.getParameter(SEARCH).toLowerCase().trim();
+            String se = req.getParameter(SEARCH);
+            String sortReq = req.getParameter(SORT);
             List<ItemDescription> allItems = dao.getAll().stream()
                     .filter(genderFunc.apply(gender))
                     .filter(categoryFunc.apply(categoryId))
                     .filter(search.apply(se))
+                    .sorted(sort.apply(sortReq))
                     .collect(Collectors.toList());
             req.setAttribute(ITEM_DESCRIPTIONS, allItems);
         }
