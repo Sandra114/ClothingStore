@@ -31,30 +31,43 @@
         <div class="col-md-7">
             <div class="panel panel-default">
                 <div class="panel-body">
+                    <c:choose>
+                        <c:when test="${requestScope.reqSize != null}">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <a href="items?action=show&id=<c:out value="${reqSize.items.id}"/>">
+                                        <img alt="placeholder"
+                                             src="<c:out value="photos/${reqSize.items.photo}"/>"
+                                             data-holder-rendered="true"
+                                             style="height: 100px; width: 100px; display: block;">
+                                    </a>
+                                </div>
 
-                    <div class="row">
-                        <div class="col-md-2">
-                            <a href="items?action=show&id=<c:out value="${reqSize.items.id}"/>">
-                                <img alt="placeholder"
-                                     src="<c:out value="photos/${reqSize.items.photo}"/>"
-                                     data-holder-rendered="true"
-                                     style="height: 100px; width: 100px; display: block;">
-                            </a>
-                        </div>
+                                <div class="col-md-6">
+                                    <h5><c:out value="${reqSize.items.title}"/></h5>
+                                    <h5>Пол:
+                                        <c:out value="${reqSize.items.gender}"/></h5>
+                                    <h5> Выбранный размер:
+                                        <span class="label label-success"><c:out value="${reqSize.size}"/></span></h5>
+                                </div>
 
-                        <div class="col-md-6">
-                            <h5><c:out value="${reqSize.items.title}"/></h5>
-                            <h5>Пол:
-                                <c:out value="${reqSize.items.gender}"/></h5>
-                            <h5> Выбранный размер:
-                                <span class="label label-success"><c:out value="${reqSize.size}"/></span></h5>
-                        </div>
-
-                        <div class=" col-md-4 text-right">
-                            <h3><span class="label label-primary">Цена:
+                                <div class=" col-md-4 text-right">
+                                    <h3><span class="label label-primary">Цена:
                                 <c:out value="${reqSize.items.price} Руб"/></span></h3>
-                        </div>
-                    </div>
+                                </div>
+                            </div>
+                        </c:when>
+
+                        <c:otherwise>
+                            <jsp:useBean id="cart" scope="session" type="com.github.sandra114.clothingshop.model.Cart"/>
+                            <h4>
+                                Ваш заказ содержит <span class="label label-primary"><c:out
+                                    value="${cart.size}"/></span> товаров на общую сумму <span class="label label-primary"><c:out
+                                    value="${cart.totalPrice}"/> руб.</span>
+                            </h4>
+                        </c:otherwise>
+                    </c:choose>
+
                     <br>
                     <div class="panel-footer">
                         <div class="row">
@@ -107,8 +120,10 @@
                                                           required></textarea>
                                             </div>
                                         </div>
-                                        <input type="hidden" name="sizeId"
-                                               value="<c:out value="${reqSize.id}"/>"/>
+                                        <c:if test="${requestScope.reqSize!= null}">
+                                            <input type="hidden" name="sizeId"
+                                                   value="<c:out value="${reqSize.id}"/>"/>
+                                        </c:if>
                                         <!-- Button -->
                                         <div class="form-group">
                                             <label class="col-md-4 control-label" for="singlebutton"></label>

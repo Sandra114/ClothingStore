@@ -59,7 +59,6 @@ public class BuyController extends HttpServlet {
             }
 
             cart.addItem(size);
-            cart.getItems().forEach(System.out::println);
             req.getSession().setAttribute(MESSAGE, Boolean.TRUE);
             resp.sendRedirect("items?action=show&id=" + size.getItems().getId());
         }

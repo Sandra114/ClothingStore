@@ -20,10 +20,10 @@
                 <%--<li><a href="#">Заказы</a></li>--%>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" class="">
+                <li><a href="cart" class="btn btn-lg btn-link">
                     <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Корзина
-                    <span class="badge progress-bar-danger"><c:if test="${sessionScope.cart != null}"><c:out value="${sessionScope.cart.size} "/></c:if></span>
-                    <c:if test="${sessionScope.cart != null}"> <c:out value="${sessionScope.cart.totalPrice}    руб."/></c:if>
+                    <span class="badge progress-bar-danger"><c:out value="${sessionScope.cart.size}" default="0"/></span>
+                    <c:out value="${sessionScope.cart.totalPrice}" default="0.0"/> руб.
                 </a>
                 </li>
             </ul>

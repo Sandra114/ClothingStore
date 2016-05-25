@@ -1,10 +1,8 @@
 package com.github.sandra114.clothingshop.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
+import java.util.Set;
 
 /**
  * @author Sandra
@@ -19,16 +17,27 @@ public class Cart {
         sizeMap.compute(size, (size1, integer) -> integer == null ? 1 : integer + 1);
     }
 
-    public void deleteItem(Size size) {
-        sizeMap.remove(size);
+    public void deleteItem(int id) {
+        Size s = getById(id);
+        sizeMap.remove(s);
     }
 
-    public void updateItem(Size size, int count) {
-        sizeMap.put(size, count);
+    public void plus(int id) {
+        Size s = getById(id);
+        sizeMap.computeIfPresent(s, (size, integer) -> integer + 1);
     }
 
-    public Stream<Map.Entry<Size, Integer>> getItems() {
-        return sizeMap.entrySet().stream();
+    public void minus(int id) {
+        Size s = getById(id);
+        sizeMap.computeIfPresent(s, (size, integer) -> integer - 1);
+    }
+
+    public void clear() {
+        sizeMap = new HashMap<>();
+    }
+
+    public Set<Map.Entry<Size, Integer>> getItems() {
+        return sizeMap.entrySet();
     }
 
     public int getSize() {
@@ -42,5 +51,9 @@ public class Cart {
         return sizeMap.entrySet().stream()
                 .map(entry -> entry.getKey().getItems().getPrice() * entry.getValue())
                 .reduce((p1, p2) -> p1 + p2).orElse(0.0);
+    }
+
+    private Size getById(int id) {
+        return sizeMap.keySet().stream().filter(size -> size.getId() == id).findFirst().orElse(null);
     }
 }
