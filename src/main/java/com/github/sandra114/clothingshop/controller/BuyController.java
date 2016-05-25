@@ -4,6 +4,7 @@ import com.github.sandra114.clothingshop.dao.CategoryDao;
 import com.github.sandra114.clothingshop.dao.CategoryDaoImpl;
 import com.github.sandra114.clothingshop.dao.SizeDao;
 import com.github.sandra114.clothingshop.dao.SizeDaoImpl;
+import com.github.sandra114.clothingshop.model.Cart;
 import com.github.sandra114.clothingshop.model.Size;
 
 import javax.servlet.RequestDispatcher;
@@ -27,6 +28,8 @@ public class BuyController extends HttpServlet {
     private static final String CATEGORIES = "categories";
 
     private static final String ONE_CLICK_PAGE = "one_click.jsp";
+    private static final String CART = "cart";
+    private static final String MESSAGE = "message";
 
     private final SizeDao sizeDao = new SizeDaoImpl();
     private final CategoryDao categoryDao = new CategoryDaoImpl();
@@ -40,13 +43,25 @@ public class BuyController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int itemId = Integer.valueOf(req.getParameter(ITEM_SIZE_PARAM));
         String buyType = req.getParameter(BUY_TYPE_PARAM);
+        Size size = sizeDao.getById(itemId);
 
         if (buyType.startsWith(ONE_CLICK)) {
-            Size size = sizeDao.getById(itemId);
             req.setAttribute(CATEGORIES, categoryDao.getAll());
             req.setAttribute(REQ_SIZE, size);
             RequestDispatcher view = req.getRequestDispatcher(ONE_CLICK_PAGE);
             view.forward(req, resp);
+        } else if (buyType.startsWith("addToCart")) {
+            Cart cart = (Cart) req.getSession().getAttribute(CART);
+
+            if (cart == null) {
+                cart = new Cart();
+                req.getSession().setAttribute(CART, cart);
+            }
+
+            cart.addItem(size);
+            cart.getItems().forEach(System.out::println);
+            req.getSession().setAttribute(MESSAGE, Boolean.TRUE);
+            resp.sendRedirect("items?action=show&id=" + size.getItems().getId());
         }
     }
 }

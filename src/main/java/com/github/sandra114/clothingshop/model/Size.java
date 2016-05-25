@@ -16,7 +16,7 @@ public class Size {
 
     private int size;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_desc_id")
     private ItemDescription items;
 

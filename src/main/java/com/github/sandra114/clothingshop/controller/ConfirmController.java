@@ -21,6 +21,7 @@ import java.util.Date;
 public class ConfirmController extends HttpServlet {
     private static final String ITEMS = "items";
     private static final String SEND_STATUS = "Отправлен";
+    public static final String MESSAGE = "message";
     private final ClientDao dao = new ClientDaoImpl();
     private final SizeDao sizeDao = new SizeDaoImpl();
     private final OrderDao orderDao = new OrderDaoImpl();
@@ -42,7 +43,7 @@ public class ConfirmController extends HttpServlet {
         OrderItem orderItem = new OrderItem(1, order, size);
         orderDao.add(order);
         orderItemDao.add(orderItem);
-
+        req.getSession().setAttribute(MESSAGE, Boolean.TRUE);
         resp.sendRedirect(ITEMS);
     }
 }

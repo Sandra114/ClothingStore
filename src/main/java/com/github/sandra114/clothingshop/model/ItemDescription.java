@@ -17,7 +17,7 @@ public class ItemDescription {
     @Column(name = "titile")
     private String title;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
 

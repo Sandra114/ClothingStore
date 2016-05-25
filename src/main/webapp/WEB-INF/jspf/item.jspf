@@ -2,8 +2,22 @@
 <%--@elvariable id="item" type="com.github.sandra114.clothingshop.model.ItemDescription"--%>
 
 <c:set var="disableBuyButton" scope="session" value="disabled=&quot;disabled&quot;"/>
+<c:if test="${sessionScope.message != null and sessionScope.message == true}">
+    <c:out escapeXml="false" value='
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success fade in">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    Товар <strong>"${item.title}" </strong>  успешно добавлен в корзину.
+                </div>
+            </div>
+        </div>
+    '/>
+    <c:set var="message" value="false" scope="session"/>
+</c:if>
 
 <div class="panel panel-default">
+
     <div class="panel-body">
         <div class="row">
             <div class="col-md-12">
@@ -76,10 +90,10 @@
                         </fieldset>
 
                         <div class="row">
-                            <button type="submit" disabled="disabled"
+                            <button type="submit"
                                     class="btn btn-primary"
                                     <c:out value="${disableBuyButton}"/>
-                                    name="action"
+                                    name="buyType"
                                     value="addToCart<c:out value="${item.id}"/>"
                             >
                                     <span class="glyphicon glyphicon-shopping-cart"
@@ -101,9 +115,11 @@
                             </button>
                         </div>
                     </form>
-                </div>
 
+                </div>
             </div>
+
         </div>
     </div>
+
 </div>

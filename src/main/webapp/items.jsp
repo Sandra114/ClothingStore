@@ -18,7 +18,7 @@
                             <li role="presentation" class="
                     <c:if test="${param.category != null && param.category != 'null' && param.category==cat.id}">
                         <c:out value="active"/>
-                    </c:if>">
+                        </c:if>">
                                 <a href="<c:url value="items?category=${cat.id}"/>"><c:out
                                         value="${cat.title}"></c:out></a>
                             </li>

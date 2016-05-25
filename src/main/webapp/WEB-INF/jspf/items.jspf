@@ -1,5 +1,19 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
+<c:if test="${sessionScope.message != null and sessionScope.message == true}">
+    <c:out escapeXml="false" value='
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success fade in">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    Ваш заказ успешно оформлен.
+                </div>
+            </div>
+        </div>
+    '/>
+    <c:set var="message" value="false" scope="session"/>
+</c:if>
+
 <div class="row">
     <div class="col-md-12">
         <form class="form" action="items" method="get">
@@ -16,6 +30,9 @@
         </form>
     </div>
 </div>
+
+<c:set var="disableBuyButton" scope="session" value="disabled=&quot;disabled&quot;"/>
+
 
 <div class="row">
     <div class="col-md-12 btn-block">
