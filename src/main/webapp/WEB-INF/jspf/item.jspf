@@ -57,7 +57,7 @@
                     </a>
                 </div>
                 <div class="row">
-                    <form class="form-horizontal" action="buy" method="post">
+                    <form class="col-md-12 form-horizontal" action="buy" method="post">
                         <fieldset>
                             <legend></legend>
                             <!-- Multiple Radios -->
