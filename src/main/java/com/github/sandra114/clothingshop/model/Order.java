@@ -54,7 +54,7 @@ public class Order {
     }
 
     public String getStatus() {
-        return status;
+        return status.trim();
     }
 
     public void setStatus(String status) {
@@ -79,6 +79,20 @@ public class Order {
 
     public void addOrderItem(OrderItem orderItem) {
         orders.add(orderItem);
+    }
+
+    public int getCount() {
+        return orders.stream()
+                .map(OrderItem::getQuantity)
+                .reduce((integer, integer2) -> integer + integer2)
+                .orElse(0);
+    }
+
+    public double getTotalPrice() {
+        return orders.stream()
+                .map(item -> item.getQuantity() * item.getSize().getItems().getPrice())
+                .reduce((aDouble, aDouble2) -> aDouble+aDouble2)
+                .orElse(0.0);
     }
 
     @Override

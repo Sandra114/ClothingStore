@@ -42,9 +42,6 @@ public class CategoryDaoImpl implements CategoryDao {
         session.beginTransaction();
         Query q = session.createQuery(FROM_CATEGORY);
         List<Category> list = (List<Category>) q.list();
-//        for (Category category : list) {
-//            Hibernate.initialize(category.getItemDescription());
-//        }
         session.getTransaction().commit();
         return list;
     }
