@@ -1,5 +1,7 @@
 package com.github.sandra114.clothingshop.controller;
 
+import com.github.sandra114.clothingshop.dao.CategoryDao;
+import com.github.sandra114.clothingshop.dao.CategoryDaoImpl;
 import com.sun.deploy.net.HttpRequest;
 
 import javax.servlet.*;
@@ -28,6 +30,8 @@ public class AdminFilter implements Filter {
 
         Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
         if (isAdmin != null && isAdmin) {
+            CategoryDao dao = new CategoryDaoImpl();
+            req.setAttribute("categories", dao.getAll());
             filterChain.doFilter(req, resp);
             return;
         }

@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
                 .orElse(false);
         if (isLogin) {
             req.getSession().setAttribute("user", login);
-            resp.sendRedirect("items");
+            resp.sendRedirect("admin/orders");
         } else {
             req.getSession().setAttribute("message", true);
             resp.sendRedirect("auth.jsp");

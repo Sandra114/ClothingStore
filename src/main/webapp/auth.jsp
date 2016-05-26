@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Clothing Shop</title>
@@ -10,25 +10,7 @@
 <%@include file="WEB-INF/jspf/top_bar.jspf" %>
 <div class="container">
     <div class="row">
-        <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <ul class="nav nav-pills nav-stacked">
-                        <%--@elvariable id="categories" type="java.util.List"--%>
-                        <c:forEach items="${categories}" var="cat">
-                            <li role="presentation" class="
-                    <c:if test="${param.category != null && param.category != 'null' && param.category==cat.id}">
-                        <c:out value="active"/>
-                        </c:if>">
-                                <a href="<c:url value="items?category=${cat.id}"/>"><c:out
-                                        value="${cat.title}"></c:out></a>
-                            </li>
-                        </c:forEach>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-7">
+        <div class="col-md-offset-3 col-md-6">
 
             <div class="row">
                 <div class="panel panel-default">
